@@ -1,0 +1,965 @@
+/**
+ * @file plugins/themes/bootstrap5/styles/theme.less
+ *
+ * Copyright (c) 2014-2023 Simon Fraser University
+ * Copyright (c) 2003-2023 John Willinsky
+ * Modified (c) 2026 Irwan Daniel - Webmaxindo.com
+ * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
+ *
+ * @brief OJS specific styles on top of Bootstrap 5.
+ *
+ * Bootstrap itself is shipped as a pre-compiled stylesheet
+ * (bootstrap/css/bootstrap.min.css), so this file must not import any
+ * Bootstrap LESS sources. Only the OJS specific adjustments and the visual
+ * design layer live here.
+ *
+ * All colours are taken from Bootstrap's CSS variables, so the design follows
+ * the selected Bootstrap theme (Bootswatch preset) and the active color mode
+ * (light / dark).
+ */
+
+// ---------------------------------------------------------------------------
+// Design tokens
+// ---------------------------------------------------------------------------
+
+:root {
+	--ojs-radius-sm: 0.5rem;
+	--ojs-radius: 0.75rem;
+	--ojs-radius-lg: 1rem;
+	--ojs-transition: 0.18s ease;
+	--ojs-shadow-color: rgba(15, 23, 42, 0.08);
+	--ojs-shadow-color-strong: rgba(15, 23, 42, 0.16);
+	--ojs-shadow-sm: 0 1px 2px var(--ojs-shadow-color);
+	--ojs-shadow: 0 0.5rem 1.5rem var(--ojs-shadow-color);
+	--ojs-shadow-lg: 0 1rem 2.5rem var(--ojs-shadow-color-strong);
+	// Fallback for browsers without color-mix() support
+	--ojs-focus-ring: 0 0 0 0.25rem rgba(13, 110, 253, 0.22);
+}
+
+@supports (background-color: color-mix(in srgb, red, blue)) {
+	:root {
+		--ojs-focus-ring: 0 0 0 0.25rem color-mix(in srgb, var(--bs-primary) 22%, transparent);
+	}
+}
+
+[data-bs-theme="dark"] {
+	--ojs-shadow-color: rgba(0, 0, 0, 0.5);
+	--ojs-shadow-color-strong: rgba(0, 0, 0, 0.7);
+}
+
+// ---------------------------------------------------------------------------
+// Base typography
+// ---------------------------------------------------------------------------
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	transition: background-color var(--ojs-transition), color var(--ojs-transition);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	letter-spacing: -0.015em;
+}
+
+h1,
+h2 {
+	font-weight: 700;
+}
+
+a {
+	text-underline-offset: 0.15em;
+}
+
+// Keep anchored targets visible below the sticky header
+[id] {
+	scroll-margin-top: 5.5rem;
+}
+
+// Support screen-reader only class from core OJS. Bootstrap 5 renamed
+// .sr-only to .visually-hidden, so the rules are repeated here.
+.pkp_screen_reader {
+	position: absolute !important;
+	width: 1px !important;
+	height: 1px !important;
+	padding: 0 !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	clip: rect(0, 0, 0, 0) !important;
+	white-space: nowrap !important;
+	border: 0 !important;
+}
+
+// Consistent keyboard focus indicator
+:where(a, button, .btn, .nav-link, .dropdown-item, .page-link):focus-visible {
+	outline: 2px solid var(--bs-primary);
+	outline-color: color-mix(in srgb, var(--bs-primary) 70%, transparent);
+	outline-offset: 2px;
+}
+
+// ---------------------------------------------------------------------------
+// Site header
+// ---------------------------------------------------------------------------
+
+#headerNavigationContainer.navbar {
+	--bs-bg-opacity: 0.92;
+	border-bottom: 1px solid var(--bs-border-color);
+	padding-block: 0.5rem;
+	-webkit-backdrop-filter: saturate(180%) blur(12px);
+	backdrop-filter: saturate(180%) blur(12px);
+}
+
+.site-name {
+	margin: 0;
+}
+
+.navbar-brand {
+	font-weight: 700;
+	letter-spacing: -0.02em;
+}
+
+.navbar-brand-logo img {
+	max-height: 3rem;
+	width: auto;
+}
+
+.navbar .nav-link {
+	border-radius: 999px;
+	padding: 0.375rem 0.75rem;
+	transition: background-color var(--ojs-transition), color var(--ojs-transition);
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus-visible {
+	background-color: var(--bs-secondary-bg);
+	color: var(--bs-emphasis-color);
+}
+
+.navbar .nav-link.active {
+	color: var(--bs-primary);
+	background-color: var(--bs-primary-bg-subtle);
+}
+
+.navbar .dropdown-menu {
+	margin-top: 0.5rem;
+}
+
+.navbar-user-nav .nav-link {
+	padding-block: 0.25rem;
+	font-size: 0.875rem;
+}
+
+.navbar-search {
+	min-width: 0;
+}
+
+@media (min-width: 1200px) {
+	.navbar-search .form-control {
+		width: 14rem;
+	}
+}
+
+@media (max-width: 1199.98px) {
+	#headerNavigationContainer .navbar-collapse {
+		padding-block: 0.75rem 0.5rem;
+		margin-top: 0.5rem;
+		border-top: 1px solid var(--bs-border-color);
+	}
+
+	.navbar-user {
+		padding-top: 0.75rem;
+		border-top: 1px solid var(--bs-border-color);
+	}
+}
+
+// Color mode switcher
+.color-mode-switcher .btn {
+	--bs-btn-padding-x: 0.625rem;
+	--bs-btn-padding-y: 0.375rem;
+	border-radius: 999px;
+}
+
+.color-mode-icon {
+	display: none;
+	align-items: center;
+}
+
+html[data-color-mode-preference="light"] .color-mode-icon-light,
+html[data-color-mode-preference="dark"] .color-mode-icon-dark,
+html[data-color-mode-preference="auto"] .color-mode-icon-auto {
+	display: inline-flex;
+}
+
+.color-mode-switcher .dropdown-menu {
+	min-width: 11rem;
+}
+
+.color-mode-check {
+	margin-inline-start: auto;
+}
+
+// ---------------------------------------------------------------------------
+// Menus
+// ---------------------------------------------------------------------------
+
+.dropdown-menu {
+	--bs-dropdown-border-radius: var(--ojs-radius-sm);
+	--bs-dropdown-border-color: var(--bs-border-color);
+	box-shadow: var(--ojs-shadow);
+	padding: 0.375rem;
+}
+
+.dropdown-item {
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+	border-radius: 0.375rem;
+	padding: 0.5rem 0.75rem;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+	color: var(--bs-primary);
+	background-color: var(--bs-tertiary-bg);
+}
+
+// ---------------------------------------------------------------------------
+// Page header and breadcrumbs
+// ---------------------------------------------------------------------------
+
+.page-header {
+	padding-bottom: 0;
+	margin: 2.5rem 0 1.5rem;
+	border-bottom: 0;
+
+	&::after {
+		content: "";
+		display: block;
+		width: 2.5rem;
+		height: 0.25rem;
+		margin-top: 0.875rem;
+		border-radius: 999px;
+		background-color: var(--bs-primary);
+		background-image: linear-gradient(
+			90deg,
+			var(--bs-primary),
+			color-mix(in srgb, var(--bs-primary) 35%, transparent)
+		);
+	}
+
+	small {
+		display: block;
+		margin-top: 0.5em;
+		color: var(--bs-secondary-color);
+	}
+}
+
+.page-header:first-child {
+	margin-top: 0;
+}
+
+.cmp_breadcrumbs {
+	margin-bottom: 1.25rem;
+}
+
+.breadcrumb {
+	--bs-breadcrumb-divider-color: var(--bs-secondary-color);
+	margin-bottom: 0;
+	font-size: 0.875rem;
+}
+
+.breadcrumb a {
+	color: var(--bs-secondary-color);
+	text-decoration: none;
+}
+
+.breadcrumb a:hover,
+.breadcrumb a:focus-visible {
+	color: var(--bs-primary);
+	text-decoration: underline;
+}
+
+// ---------------------------------------------------------------------------
+// Cards and summaries
+// ---------------------------------------------------------------------------
+
+// Use the Bootstrap card tokens for a consistent radius, border and header.
+.card {
+	--bs-card-border-radius: var(--ojs-radius);
+	--bs-card-inner-border-radius: ~"calc(var(--ojs-radius) - var(--bs-border-width))";
+	--bs-card-border-color: var(--bs-border-color);
+	--bs-card-cap-bg: var(--bs-tertiary-bg);
+}
+
+.article-summary,
+.issue-summary {
+	transition: transform var(--ojs-transition), box-shadow var(--ojs-transition), border-color var(--ojs-transition);
+}
+
+.article-summary:hover,
+.issue-summary:hover {
+	transform: translateY(-2px);
+	box-shadow: var(--ojs-shadow);
+	border-color: color-mix(in srgb, var(--bs-primary) 30%, var(--bs-border-color));
+}
+
+.article-summary .media-heading,
+.issue-summary .media-heading {
+	margin-bottom: 0.5rem;
+}
+
+.article-summary .media-heading a,
+.issue-summary .media-heading a {
+	color: var(--bs-emphasis-color);
+	text-decoration: none;
+}
+
+.article-summary .media-heading a:hover,
+.article-summary .media-heading a:focus-visible,
+.issue-summary .media-heading a:hover,
+.issue-summary .media-heading a:focus-visible {
+	color: var(--bs-primary);
+}
+
+.article-summary .meta,
+.article-summary .pages {
+	color: var(--bs-secondary-color);
+}
+
+.media-heading {
+	font-size: 1.25rem;
+}
+
+.article-summary .media-heading small {
+	font-size: 85%;
+}
+
+.article-summary .cover img {
+	max-width: 128px;
+	height: auto;
+	border-radius: var(--ojs-radius-sm);
+	box-shadow: var(--ojs-shadow-sm);
+}
+
+.issue-summary .cover img {
+	display: block;
+}
+
+.article_count {
+	margin-bottom: 1em;
+}
+
+// Announcements
+.announcement-summary {
+	border-inline-start: 3px solid var(--bs-primary);
+}
+
+.announcement-summary .media-heading {
+	font-size: 1.125rem;
+}
+
+.announcement-summary .date {
+	font-size: 0.875rem;
+	color: var(--bs-secondary-color);
+}
+
+// ---------------------------------------------------------------------------
+// Article details
+// ---------------------------------------------------------------------------
+
+.article-details {
+
+	.page-header {
+		margin-top: 0;
+	}
+
+	.article-abstract {
+		margin-bottom: 2em;
+	}
+
+	.article-section h2 {
+		margin-top: 2rem;
+	}
+
+	// Add space below authors on article page
+	.authors {
+		margin-bottom: 2em;
+	}
+
+	.orcid_icon {
+		display: inline-block;
+		margin-inline-end: 0.25em;
+		width: 24px;
+		height: 24px;
+		vertical-align: middle;
+	}
+
+	.author + .author {
+		margin-top: 0.5em;
+	}
+
+	.download .btn {
+		margin: 0.5em 0;
+		display: block;
+	}
+
+	.card {
+		border-radius: var(--ojs-radius);
+		box-shadow: var(--ojs-shadow-sm);
+	}
+
+	.card-header {
+		font-weight: 600;
+		background-color: var(--bs-tertiary-bg);
+	}
+
+	// Add space between citation output and list of citation formats
+	#citationOutput {
+		margin-bottom: 1rem;
+		word-wrap: break-word;
+	}
+
+	// Hide the bibliography number produced by some CSL styles
+	.csl-left-margin {
+		display: none;
+	}
+}
+
+.article-sidebar {
+
+	// Ensure doi link doesn't extend beyond container
+	.doi {
+		word-wrap: break-word;
+	}
+}
+
+.downloads_chart h2 {
+	font-size: 1.25rem;
+}
+
+// ---------------------------------------------------------------------------
+// Blocks
+// ---------------------------------------------------------------------------
+
+.pkp_block {
+	margin-bottom: 1.5rem;
+	background-color: var(--bs-body-bg);
+	border: var(--bs-border-width) solid var(--bs-border-color);
+	border-radius: var(--ojs-radius);
+	box-shadow: var(--ojs-shadow-sm);
+	overflow: hidden;
+
+	.title {
+		display: block;
+		margin: 0;
+		padding: 0.75rem 1.25rem;
+		font-size: 1rem;
+		font-weight: 600;
+		background-color: var(--bs-tertiary-bg);
+		border-bottom: var(--bs-border-width) solid var(--bs-border-color);
+	}
+
+	.content {
+		padding: 1rem 1.25rem;
+	}
+
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		li {
+			margin-bottom: 0.375rem;
+		}
+
+		li:last-child {
+			margin-bottom: 0;
+		}
+
+		a {
+			display: block;
+			margin-inline: -0.5rem;
+			padding: 0.25rem 0.5rem;
+			border-radius: 0.375rem;
+			color: var(--bs-body-color);
+			text-decoration: none;
+			transition: background-color var(--ojs-transition), color var(--ojs-transition);
+
+			&:hover,
+			&:focus-visible {
+				color: var(--bs-primary);
+				background-color: var(--bs-tertiary-bg);
+			}
+		}
+	}
+}
+
+// Apply bootstrap table style to .cmp_table elements
+.cmp_table {
+	width: 100%;
+	margin-bottom: 1rem;
+	border-color: var(--bs-border-color);
+
+	> :not(caption) > * > * {
+		padding: 0.5rem;
+		border-bottom: var(--bs-border-width) solid var(--bs-border-color);
+	}
+}
+
+// Apply button styles to makeSubmission block plugin
+.pkp_block.block_make_submission {
+
+	a {
+		display: block;
+		padding: 0.5rem 1rem;
+		text-align: center;
+		text-decoration: none;
+		color: var(--bs-secondary-color);
+		border: 1px solid var(--bs-secondary-color);
+		border-radius: var(--ojs-radius-sm);
+
+		&:hover,
+		&:focus-visible {
+			color: var(--bs-white);
+			background-color: var(--bs-secondary);
+		}
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Buttons, forms, alerts, pagination
+// ---------------------------------------------------------------------------
+
+.btn {
+	--bs-btn-font-weight: 500;
+	--bs-btn-border-radius: var(--ojs-radius-sm);
+}
+
+.btn-primary {
+	box-shadow: var(--ojs-shadow-sm);
+}
+
+.galley-link.btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+}
+
+.form-control,
+.form-select {
+	border-radius: var(--ojs-radius-sm);
+}
+
+.form-control:focus,
+.form-select:focus {
+	border-color: color-mix(in srgb, var(--bs-primary) 55%, var(--bs-border-color));
+	box-shadow: var(--ojs-focus-ring);
+}
+
+.form-check-input:focus {
+	box-shadow: var(--ojs-focus-ring);
+}
+
+.alert {
+	border-radius: var(--ojs-radius-sm);
+}
+
+.pagination {
+	--bs-pagination-border-radius: var(--ojs-radius-sm);
+	--bs-pagination-focus-box-shadow: var(--ojs-focus-ring);
+	--bs-pagination-active-bg: var(--bs-primary);
+	--bs-pagination-active-border-color: var(--bs-primary);
+	gap: 0.25rem;
+}
+
+.pagination .page-link {
+	min-width: 2.5rem;
+	text-align: center;
+	border-radius: var(--ojs-radius-sm);
+	transition: background-color var(--ojs-transition), color var(--ojs-transition), border-color var(--ojs-transition);
+}
+
+.pagination-summary {
+	color: var(--bs-secondary-color);
+}
+
+// Forms
+//
+// Apply to a span that marks required form fields.
+.form-control-required {
+	color: var(--bs-danger);
+}
+
+.references a {
+	// Avoid long links overflow
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	-ms-word-break: break-all;
+	word-break: break-word;
+}
+
+// ---------------------------------------------------------------------------
+// Footer
+// ---------------------------------------------------------------------------
+
+footer[role="contentinfo"] {
+	margin-top: 4rem;
+	padding: 3rem 0 2rem;
+	background-color: var(--bs-tertiary-bg);
+	border-top: 1px solid var(--bs-border-color);
+	color: var(--bs-secondary-color);
+
+	a {
+		color: var(--bs-secondary-color);
+		text-decoration: none;
+
+		&:hover,
+		&:focus-visible {
+			color: var(--bs-primary);
+			text-decoration: underline;
+		}
+	}
+
+	img {
+		opacity: 0.75;
+		transition: opacity var(--ojs-transition);
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Homepage
+// ---------------------------------------------------------------------------
+
+.homepage-image img {
+	width: 100%;
+	max-height: 28rem;
+	object-fit: cover;
+	border-radius: var(--ojs-radius);
+	box-shadow: var(--ojs-shadow-sm);
+}
+
+.pkp_page_index .journal-description {
+	font-size: 1.0625rem;
+	color: var(--bs-secondary-color);
+}
+
+// Wrap homepage journal description and additional content in margins
+.pkp_page_index .journal-description,
+.pkp_page_index .additional_content {
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+
+// Cap the height of an issue thumbnail image
+.issue-toc img {
+	max-height: 25em;
+}
+
+.issue-toc .cover img {
+	border-radius: var(--ojs-radius-sm);
+	box-shadow: var(--ojs-shadow-sm);
+}
+
+.issue-toc .page-header h2 small {
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--bs-secondary-color);
+}
+
+// ---------------------------------------------------------------------------
+// PDF and HTML galley viewer
+// ---------------------------------------------------------------------------
+
+.header_view {
+	position: relative;
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	min-height: 3.5rem;
+	background: var(--bs-tertiary-bg);
+	border-bottom: 1px solid var(--bs-border-color);
+	box-shadow: var(--ojs-shadow-sm);
+
+	a {
+		display: inline-block;
+		padding: 0.5rem 1rem;
+		color: var(--bs-body-color);
+		text-decoration: none;
+
+		&:hover,
+		&:focus-visible {
+			color: var(--bs-emphasis-color);
+			background: var(--bs-secondary-bg);
+		}
+	}
+
+	.title {
+		flex: 1 1 auto;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	// Visually hide the return link, but keep it available to screen readers
+	.return {
+		position: absolute !important;
+		width: 1px !important;
+		height: 1px !important;
+		padding: 0 !important;
+		margin: -1px !important;
+		overflow: hidden !important;
+		clip: rect(0, 0, 0, 0) !important;
+		white-space: nowrap !important;
+		border: 0 !important;
+	}
+
+	.download {
+		margin-inline-start: auto;
+	}
+}
+
+.galley_view {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow-y: hidden;
+
+	iframe {
+		width: 100%;
+		height: 100%;
+		padding-top: 3.5rem;
+		border: none;
+	}
+
+	&.galley_view_with_notice {
+
+		iframe {
+			padding-top: 7rem;
+		}
+	}
+
+	.galley_view_notice {
+		position: absolute;
+		top: 3.5rem;
+		width: 100%;
+		height: 3.5rem;
+		background: var(--bs-danger);
+		color: var(--bs-white);
+	}
+
+	.galley_view_notice_message {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 100%;
+		transform: translate(-50%, -50%);
+		text-align: center;
+
+		a {
+			color: inherit;
+			text-decoration: underline;
+		}
+	}
+}
+
+// Hide the citation number in the CSL output
+#citationOutput .csl-left-margin {
+	display: none;
+}
+
+// ---------------------------------------------------------------------------
+// Editorial masthead
+// ---------------------------------------------------------------------------
+
+.page_masthead {
+	.user_listing {
+		margin-top: 1em;
+		list-style-type: none;
+		padding: 0;
+
+		li {
+			margin-bottom: 1.5em;
+		}
+
+		li > span {
+			display: block;
+		}
+
+		.name {
+			font-weight: bold;
+		}
+
+		.affiliation {
+			color: var(--bs-secondary-color);
+		}
+
+		.date_start {
+			color: var(--bs-secondary-color);
+		}
+
+		.orcid {
+			font-size: 0.875em;
+			margin-left: 0.2rem;
+			margin-right: 0.2rem;
+		}
+
+		.orcid_icon {
+			width: 1.4rem;
+			height: 1.4rem;
+			margin: 0;
+		}
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Motion preferences
+// ---------------------------------------------------------------------------
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
+	*,
+	*::before,
+	*::after {
+		transition-duration: 0.01ms !important;
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+	}
+
+	.article-summary:hover,
+	.issue-summary:hover {
+		transform: none;
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Authentication and long forms
+// ---------------------------------------------------------------------------
+
+.bs5-auth {
+	max-width: 30rem;
+	margin: 0 auto 3rem;
+}
+
+.bs5-auth-wide {
+	max-width: 52rem;
+}
+
+.bs5-auth-card {
+	padding: 1.75rem;
+	background-color: var(--bs-body-bg);
+	border: 1px solid var(--bs-border-color);
+	border-top: 3px solid var(--bs-primary);
+	border-radius: var(--ojs-radius);
+	box-shadow: var(--ojs-shadow-sm);
+}
+
+@media (min-width: 768px) {
+	.bs5-auth-card {
+		padding: 2.25rem;
+	}
+}
+
+.bs5-auth-header {
+	margin-bottom: 1.5rem;
+	text-align: center;
+}
+
+.bs5-auth-title {
+	margin-bottom: 0.5rem;
+	font-size: ~"clamp(1.6rem, 3vw, 2rem)";
+	line-height: 1.2;
+}
+
+.bs5-auth-subtitle {
+	margin-bottom: 0;
+	color: var(--bs-secondary-color);
+}
+
+.bs5-auth .alert {
+	margin-bottom: 1.25rem;
+	border-radius: var(--ojs-radius-sm);
+}
+
+.bs5-auth .form-label,
+.bs5-form-section .form-label,
+.bs5-search-filter .form-label {
+	font-weight: 600;
+}
+
+.bs5-auth .input-group .btn {
+	color: var(--bs-secondary-color);
+	border-color: var(--bs-border-color);
+}
+
+.bs5-auth-actions {
+	display: grid;
+	gap: 0.75rem;
+	margin-top: 1.5rem;
+}
+
+.bs5-auth-links {
+	margin-top: 1rem;
+	margin-bottom: 0;
+	font-size: 0.9375rem;
+	text-align: center;
+}
+
+.bs5-form-section {
+	padding: 1.25rem;
+	margin-bottom: 1.5rem;
+	background-color: var(--bs-body-bg);
+	border: 1px solid var(--bs-border-color);
+	border-top: 2px solid var(--bs-primary);
+	border-radius: var(--ojs-radius);
+}
+
+.bs5-form-section > legend {
+	float: none;
+	width: 100%;
+	padding: 0 0 0.5rem;
+	margin: 0 0 1rem;
+	font-size: 1.125rem;
+	font-weight: 700;
+	border-bottom: 1px solid var(--bs-border-color);
+}
+
+.bs5-form-section .form-text {
+	color: var(--bs-secondary-color);
+}
+
+.bs5-context-card {
+	border-top: 2px solid var(--bs-primary);
+}
+
+.bs5-context-card .card-title {
+	margin-bottom: 0.25rem;
+}
+
+.bs5-search-filter .form-select {
+	min-width: 7rem;
+}
+
+.bs5-search-filter .delete {
+	margin-top: 0.5rem;
+}
+

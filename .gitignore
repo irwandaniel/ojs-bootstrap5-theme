@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Editors and IDEs
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Node.js (not required by this theme, but avoids accidental commits)
+node_modules/
+npm-debug.log*
+
+# Archives and temporary files
+*.zip
+*.tar.gz
+*.log

@@ -1,0 +1,25 @@
+* text=auto eol=lf
+
+*.php text
+*.tpl text
+*.less text
+*.js text
+*.json text
+*.xml text
+*.po text
+*.md text
+
+*.ttf binary
+*.woff binary
+*.woff2 binary
+*.eot binary
+*.otf binary
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.ico binary
+/.github export-ignore
+/.gitignore export-ignore
+/.gitattributes export-ignore
+/PUBLISHING.md export-ignore
