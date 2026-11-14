@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2024 Simon Fraser University
  * Copyright (c) 2024 John Willinsky
- * Modified (c) 2026 Irwan Daniel - Webmaxindo.com
+ * Modified (c) 2026 Irwan Daniel - ([Webmaxindo](http://www.webmaxindo.com/))
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * @brief Display context's editorial masthead page.

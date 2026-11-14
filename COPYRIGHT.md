@@ -21,7 +21,7 @@ The original copyright notices are retained in every source file.
 
 ### Modifications
 
-- **Copyright (c) 2026 Irwan Daniel - Webmaxindo.com**
+- **Copyright (c) 2026 Irwan Daniel - ([Webmaxindo](http://www.webmaxindo.com/))**
 - Modification date: **2026-11-14**
 - Modified work: Bootstrap 5 theme for OJS 3.5 (`plugins/themes/bootstrap5`)
 
@@ -43,7 +43,7 @@ The modifications include:
 Every modified source file carries a prominent notice:
 
 ```
-Modified (c) 2026 Irwan Daniel - Webmaxindo.com
+Modified (c) 2026 Irwan Daniel - ([Webmaxindo](http://www.webmaxindo.com/))
 ```
 
 in accordance with section 5(a) of the GNU GPL v3.

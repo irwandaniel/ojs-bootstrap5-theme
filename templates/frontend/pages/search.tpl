@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2014-2023 Simon Fraser University
  * Copyright (c) 2003-2023 John Willinsky
- * Modified (c) 2026 Irwan Daniel - Webmaxindo.com
+ * Modified (c) 2026 Irwan Daniel - ([Webmaxindo](http://www.webmaxindo.com/))
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * @brief Display the page to search and view search results.
@@ -42,39 +42,43 @@
 
 			<div class="input-group">
 				<input type="search" id="query" name="query" value="{$query|escape}" class="query form-control" placeholder="{translate key="common.search"}">
-				<input type="submit" value="{translate key="common.search"}" class="btn btn-primary">
+				<input type="submit" value="{translate key="common.search"}" class="btn btn-outline-secondary">
 			</div>
 		</div>
 
-		<fieldset class="bs5-form-section search-advanced">
+		<fieldset class="search-advanced">
 			<legend>
 				{translate key="search.advancedFilters"}
 			</legend>
-			<div class="row g-3">
+			<div class="row">
 				<div class="col-md-6">
 					<div class="mb-3">
-						<label class="form-label" for="dateFromYear">
+						<label for="dateFromYear">
 							{translate key="search.dateFrom"}
 						</label>
 						<div class="d-flex gap-2 flex-wrap">
-							{html_select_date prefix="dateFrom" time=$dateFrom start_year=$yearStart end_year=$yearEnd year_empty="" month_empty="" day_empty="" field_order="YMD" all_extra="class=\"form-select\""}
+							<div class="mb-3">
+								{html_select_date prefix="dateFrom" time=$dateFrom start_year=$yearStart end_year=$yearEnd year_empty="" month_empty="" day_empty="" field_order="YMD"}
+							</div>
 						</div>
 					</div>
-					<div class="mb-0">
-						<label class="form-label" for="dateToYear">
+					<div class="mb-3">
+						<label for="dateToYear">
 							{translate key="search.dateTo"}
 						</label>
 						<div class="d-flex gap-2 flex-wrap">
-							{html_select_date prefix="dateTo" time=$dateTo start_year=$yearStart end_year=$yearEnd year_empty="" month_empty="" day_empty="" field_order="YMD" all_extra="class=\"form-select\""}
+							<div class="mb-3">
+								{html_select_date prefix="dateTo" time=$dateTo start_year=$yearStart end_year=$yearEnd year_empty="" month_empty="" day_empty="" field_order="YMD"}
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-6">
-					<div class="mb-0">
-						<label class="form-label" for="authors">
+					<div class="mb-3">
+						<label for="authors">
 							{translate key="search.author"}
 						</label>
-						<input class="form-control" type="text" id="authors" name="authors" value="{$authors|escape}">
+						<input class="form-control" type="text" for="authors" name="authors" value="{$authors|escape}">
 					</div>
 				</div>
 			</div>

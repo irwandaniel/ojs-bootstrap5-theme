@@ -2,7 +2,7 @@
 
 > **Modified version.** This theme is a derivative work of the Bootstrap 3 theme
 > for OJS, ported to Bootstrap 5. **Modified (c) 2026 Irwan Daniel -
-> Webmaxindo.com.** Licensed under the GNU GPL v3; see [`LICENSE`](LICENSE) and
+> ([Webmaxindo](http://www.webmaxindo.com/)).** Licensed under the GNU GPL v3; see [`LICENSE`](LICENSE) and
 > [`COPYRIGHT.md`](COPYRIGHT.md).
 
 A theme for Open Journal Systems 3.5 that implements the [Bootstrap 5](https://getbootstrap.com/) components on the reader frontend.
@@ -133,7 +133,7 @@ third-party licence details are documented in [`COPYRIGHT.md`](COPYRIGHT.md).
 - Original theme and OJS templates: Copyright (c) 2014–2023 Simon Fraser
   University, Copyright (c) 2003–2023 John Willinsky, and the contributors of
   the Bootstrap 3 theme for OJS.
-- Modifications: **Modified (c) 2026 Irwan Daniel - Webmaxindo.com**.
+- Modifications: **Modified (c) 2026 Irwan Daniel - ([Webmaxindo](http://www.webmaxindo.com/))**.
 - Every modified source file carries this modification notice, as required by
   section 5(a) of the GNU GPL v3.
 - The complete corresponding source code is this repository.
@@ -173,4 +173,4 @@ everyone who contributed to that project:
 
 Bootstrap 5 port, color modes and design refresh:
 
-- **Irwan Daniel - Webmaxindo.com** (2026)
+- **Irwan Daniel - ([Webmaxindo](http://www.webmaxindo.com/))** (2026)

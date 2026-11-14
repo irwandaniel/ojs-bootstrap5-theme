@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2014-2024 Simon Fraser University Library
  * Copyright (c) 2003-2024 John Willinsky
- * Modified (c) 2026 Irwan Daniel - Webmaxindo.com
+ * Modified (c) 2026 Irwan Daniel - ([Webmaxindo](http://www.webmaxindo.com/))
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * @brief View of an Article summary which is shown within a list of articles.
